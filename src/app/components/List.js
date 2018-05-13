@@ -1,28 +1,24 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import Note from "./Note";
 import NoteForm from "./NoteForm";
 
-export default class List extends React.Component {
-    state = {
-        mang: ['Androi', 'ioS', 'NodeJs'],
-        click:false
-    };
-
-    remove=(index)=> {
-        this.state.mang.splice(index, 1);
-        this.setState(this.state);
-    };
+class List extends React.Component {
 
     add = (e) => {
-        this.state.mang.push(e);
+        this.props.mang.push(e);
         this.setState(this.state);
     };
 
     render() {
         return <div>
             <NoteForm submit={this.add}/>
-            {this.state.mang.map((e, index) => <Note handleRemove={this.remove} id={index}
+            {this.props.mang.map((e, index) => <Note id={index}
                                                      key={index}>{e}</Note>)}
         </div>
     }
 }
+
+export default connect(function (state) {
+    return {mang: state.state.mang}
+})(List);

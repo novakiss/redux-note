@@ -1,9 +1,10 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {addNote,addItem} from '../actions';
 
-export default class NoteForm extends React.Component {
+class NoteForm extends React.Component {
     state = {
         text: '',
-        clicked:false
     };
 
     handleChange = (e) => {
@@ -12,23 +13,35 @@ export default class NoteForm extends React.Component {
 
     handleClick = (e) => {
         e.preventDefault();//chong viec refresh trang web
-        const {submit} = this.props;
+        const {dispatch} = this.props;
         if (this.state.text !== '') {
-            submit(this.state.text);
+            dispatch(addItem(this.state.text));
+            dispatch(addNote());
+            this.setState({text: ''});
+        }else{
+            dispatch(addNote());
         }
-        this.setState({text: '',clicked:false});
+
+
     };
 
-    addNote=()=>{
-        this.setState({clicked:true});
+    addNote = () => {
+        const {dispatch} = this.props;
+        dispatch(addNote());
     };
 
     render() {
-        if(this.state.clicked)
-        return (<form onSubmit={this.handleClick}>
-            <input onChange={this.handleChange} value={this.state.text} type="text" placeholder="Enter your Text"/><br/>
-            <button>Add</button>
-        </form>);
-        return<button onClick={this.addNote}>Add</button>
+        if (this.props.isChecked) {
+            return (<form onSubmit={this.handleClick}>
+                <input onChange={this.handleChange} value={this.state.text} type="text"
+                       placeholder="Enter your Text"/><br/>
+                <button>Add</button>
+            </form>)
+        }
+        return <button onClick={this.addNote}>Add</button>
     }
 }
+
+export default connect(function (state) {
+    return {isChecked: state.state.isChecked}
+})(NoteForm)

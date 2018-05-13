@@ -1,10 +1,11 @@
 import React from 'react';
-import {list} from './List';
+import {connect} from 'react-redux';
+import {removeItem} from '../actions';
 
-export default class Note extends React.Component {
+class Note extends React.Component {
     removeNote=()=>{
-        const {index,handleRemove}= this.props;
-        handleRemove(index);
+        const {id,dispatch}= this.props;
+        dispatch(removeItem(id));
     };
 
     render() {
@@ -14,3 +15,5 @@ export default class Note extends React.Component {
         </div>);
     }
 }
+
+export default connect()(Note);
