@@ -1,8 +1,7 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {addNote,addItem} from '../actions';
 
-class NoteForm extends React.Component {
+
+export default class NoteForm extends React.Component {
     state = {
         text: '',
     };
@@ -13,21 +12,21 @@ class NoteForm extends React.Component {
 
     handleClick = (e) => {
         e.preventDefault();//chong viec refresh trang web
-        const {dispatch} = this.props;
+        const {addItem,addNote} = this.props;
         if (this.state.text !== '') {
-            dispatch(addItem(this.state.text));
-            dispatch(addNote());
+            addItem(this.state.text);
+            addNote();
             this.setState({text: ''});
         }else{
-            dispatch(addNote());
+            addNote();
         }
 
 
     };
 
     addNote = () => {
-        const {dispatch} = this.props;
-        dispatch(addNote());
+        const {addNote}=this.props;
+       addNote();
     };
 
     render() {
@@ -41,7 +40,3 @@ class NoteForm extends React.Component {
         return <button onClick={this.addNote}>Add</button>
     }
 }
-
-export default connect(function (state) {
-    return {isChecked: state.state.isChecked}
-})(NoteForm)

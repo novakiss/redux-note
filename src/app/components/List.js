@@ -1,24 +1,15 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import Note from "./Note";
-import NoteForm from "./NoteForm";
+import NoteContainer from "../container/NoteContainer";
+import NoteFormContainer from "../container/NoteFormContainer";
 
-class List extends React.Component {
-
-    add = (e) => {
-        this.props.mang.push(e);
-        this.setState(this.state);
-    };
+export default class List extends React.Component {
 
     render() {
         return <div>
-            <NoteForm submit={this.add}/>
-            {this.props.mang.map((e, index) => <Note id={index}
-                                                     key={index}>{e}</Note>)}
+            <NoteFormContainer/>
+            {this.props.mang.map((e, index) => <NoteContainer id={index}
+                                                     key={index}>{e}</NoteContainer>)}
         </div>
     }
 }
 
-export default connect(function (state) {
-    return {mang: state.state.mang}
-})(List);
