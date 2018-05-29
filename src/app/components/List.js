@@ -7,8 +7,9 @@ export default class List extends React.Component {
     render() {
         return <div>
             <NoteFormContainer/>
-            {this.props.mang.map((e, index) => <NoteContainer id={index}
-                                                     key={index}>{e}</NoteContainer>)}
+
+            {this.props.mang.listIDs.length>0?this.props.mang.listIDs.map((e, index) => <NoteContainer id={index}
+                                                     key={index}>{this.props.mang.byID[e].item}</NoteContainer>):null}
         </div>
     }
 }

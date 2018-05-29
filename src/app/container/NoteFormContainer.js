@@ -3,8 +3,8 @@ import {addNote,addItem} from '../actions';
 import NoteFrom from '../components/NoteForm';
 
 const mapStatetoProps= (state)=>{
-  const {isChecked}= state.state;
-  return {isChecked};
+  const {isChecked,mang}= state.state;
+  return {isChecked,mang};
 };
 
 const mapDispatchToProps={

@@ -1,10 +1,25 @@
-const mangReducer = (state =  ['Androi', 'ioS', 'NodeJS'], action) =>{
+const initialState = {
+    byID: {},
+    listIDs: [],
+};
+
+const mangReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'ADD_ITEM':
-            console.log(action.item);
-            return [...state, action.item];
+            const {id, item} = action.payload;
+            return {
+                ...state,
+                byID: {...state.byID,[id]: {id: id, item: item}},
+                listIDs: [...state.listIDs, id]
+            };
         case 'DEL_ITEM':
-            return state.filter((e, i) => i !== action.index);
+            delete state.byID[action.id];
+            //const byIDRest=state.byID;
+            return {...state,
+                byID:{...state.byID},
+                listIDs: state.listIDs.filter((e)=>e!==action.id)};
+            //state.byID.filter((e, i) => i !== action.id);
+
         default:
             return state;
     }
